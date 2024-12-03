@@ -20,7 +20,7 @@ jobs:
           name: manylinux-x86-wheel
           path: cli/dist.zip
   test-wheels:
-    container: quay.io/pypa/manylinux2014_x86_64
+    container: quay.io/pypa/manylinux_2_28_x86_64
     needs:
       - build-wheels
     runs-on: ubuntu-latest
@@ -40,7 +40,7 @@ jobs:
           export PATH=/opt/python/cp38-cp38/bin:$PATH
           echo '1 == 1' | semgrep -l python -e '$X == $X' -
   test-wheels-venv:
-    container: quay.io/pypa/manylinux2014_x86_64
+    container: quay.io/pypa/manylinux_2_28_x86_64
     needs:
       - build-wheels
     runs-on: ubuntu-latest

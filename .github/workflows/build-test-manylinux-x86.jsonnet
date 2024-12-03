@@ -58,7 +58,7 @@ local build_wheels_job = {
 
 local test_wheels_job = {
   'runs-on': 'ubuntu-latest',
-  container: 'quay.io/pypa/manylinux2014_x86_64',
+  container: 'quay.io/pypa/manylinux_2_28_x86_64',
   needs: [
     'build-wheels',
   ],
@@ -94,7 +94,7 @@ local test_wheels_job = {
 
 local test_wheels_venv_job = {
   'runs-on': 'ubuntu-latest',
-  container: 'quay.io/pypa/manylinux2014_x86_64',
+  container: 'quay.io/pypa/manylinux_2_28_x86_64',
   needs: [
     'build-wheels',
   ],
