@@ -189,7 +189,7 @@ local test_wheels_wsl_job = {
 
 {
   name: 'build-test-manylinux-x86',
-  on: gha.on_dispatch_or_call,
+  on: 'push',
   jobs: {
     'build-wheels': build_wheels_job,
     'test-wheels': test_wheels_job,
