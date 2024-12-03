@@ -93,4 +93,6 @@ jobs:
           echo '1 == 1' | semgrep -l python -e '$X == $X' -
         shell: wsl-bash {0}
 name: build-test-manylinux-x86
-on: push
+on:
+  workflow_call: null
+  workflow_dispatch: null
