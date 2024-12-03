@@ -36,7 +36,7 @@ local build_wheels_job = {
   steps: [
     actions.checkout_with_submodules(),
     {
-      run: 'yum update && yum install -y zip musl-tools software-properties-common python3-pip python3.8',
+      run: 'yum update && yum install -y zip python3-pip python3.8',
     },
     actions.download_artifact_step(core_x86.export.artifact_name),
     {
