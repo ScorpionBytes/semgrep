@@ -36,7 +36,13 @@ local build_wheels_job = {
   steps: [
     actions.checkout_with_submodules(),
     {
-      run: 'yum update && yum install -y zip python3-pip python3.8',
+      run: |||
+        yum update
+        yum install -y zip python3-pip python3.8
+        alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 1
+        alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 2
+        alternatives --config python3
+      |||,
     },
     actions.download_artifact_step(core_x86.export.artifact_name),
     {
