@@ -32,7 +32,7 @@ local wheel_name = 'manylinux-x86-wheel';
 
 local build_wheels_job = {
   'runs-on': 'ubuntu-latest',
-  container: 'quay.io/repository/pypa/manylinux_2_28_x86_64',
+  container: 'quay.io/pypa/manylinux_2_28_x86_64',
   steps: [
     actions.checkout_with_submodules(),
     {
