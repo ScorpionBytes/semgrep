@@ -39,6 +39,7 @@ local build_wheels_job = {
       run: |||
         yum update
         yum install -y zip python3-pip python3.8
+        alternatives --remove-all python3
         alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 1
         alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 2
         alternatives --config python3
@@ -186,7 +187,7 @@ local test_wheels_wsl_job = {
 
 {
   name: 'build-test-manylinux-x86',
-  on: gha.on_dispatch_or_call,
+  on: 'push',
   jobs: {
     'build-wheels': build_wheels_job,
     'test-wheels': test_wheels_job,
