@@ -42,7 +42,7 @@ local build_wheels_job = {
         alternatives --remove-all python3
         alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 1
         alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 2
-        alternatives --config python3
+        alternatives --auto python3
       |||,
     },
     actions.download_artifact_step(core_x86.export.artifact_name),
