@@ -9,15 +9,7 @@ local release_homebrew = import 'release-homebrew.jsonnet';
 // ----------------------------------------------------------------------------
 {
   name: 'nightly',
-  on: {
-    workflow_dispatch: null,
-    schedule: [
-      {
-        // every day at 9:26
-        cron: '26 9 * * *',
-      },
-    ],
-  },
+  on: 'push',
   jobs: {
     'brew-build': release_homebrew.export.brew_build,
     'release-dry-run': {
@@ -27,8 +19,5 @@ local release_homebrew = import 'release-homebrew.jsonnet';
         'dry-run': true,
       },
     },
-    'notify-failure': semgrep.slack.notify_failure_job(
-      "The nightly cron failed on ${{ github.sha }}. See https://github.com/${{github.repository}}/actions/runs/${{github.run_id}} for more information."
-      ) + { needs: ['brew-build', 'release-dry-run'] },
   },
 }
