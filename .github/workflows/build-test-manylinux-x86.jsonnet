@@ -20,9 +20,9 @@
 // https://isdown.app/integrations/quay-io
 // We use it because the manylinux project is using it.
 
-local gha = import "libs/gha.libsonnet";
 local actions = import "libs/actions.libsonnet";
 local core_x86 = import "build-test-core-x86.jsonnet";
+local gha = import "libs/gha.libsonnet";
 
 local wheel_name = 'manylinux-x86-wheel';
 
@@ -32,10 +32,7 @@ local wheel_name = 'manylinux-x86-wheel';
 
 local build_wheels_job = {
   'runs-on': 'ubuntu-latest',
-  // This is a 4 years old container, built from a 4 years old file
-  // https://github.com/semgrep/sgrep-build-docker/blob/master/Dockerfile
-  // TODO: switch to a standard container (use quay.io/manylinux_2014_x86_64 ?)
-  container: 'returntocorp/sgrep-build:ubuntu-18.04',
+  container: 'quay.io/repository/pypa/manylinux_2_28_x86_64',
   steps: [
     actions.checkout_with_submodules(),
     {
@@ -193,15 +190,6 @@ local test_wheels_wsl_job = {
 {
   name: 'build-test-manylinux-x86',
   on: gha.on_dispatch_or_call,
-  // ugly: this is a temporary solution to avoid some recent glibc linking
-  // error in GHA because we're using very old containers (ubuntu 18.04).
-  // See https://github.com/actions/checkout/issues/1590
-  // for more context.
-  // TODO: ww should update to a more recent one but nobody fully understand
-  // this workflow and what is returntocorp/sgrep-build:ubuntu-18.04
-  env: {
-    'ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION': true,
-  },
   jobs: {
     'build-wheels': build_wheels_job,
     'test-wheels': test_wheels_job,
