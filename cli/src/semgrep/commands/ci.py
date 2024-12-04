@@ -279,7 +279,7 @@ def ci(
     dump_rule_partitions_dir: Optional[Path],
     partial_config: Optional[Path],
     partial_output: Optional[Path],
-    core_wrapper: Optional[str]
+    core_wrapper: Optional[str],
 ) -> None:
     state = get_state()
 
@@ -626,7 +626,7 @@ def ci(
             "dump_n_rule_partitions": dump_n_rule_partitions,
             "dump_rule_partitions_dir": dump_rule_partitions_dir,
             "prioritize_dependency_graph_generation": scan_handler.prioritize_dependency_graph_generation,
-            "core_wrapper": core_wrapper
+            "core_wrapper": core_wrapper,
             if scan_handler
             else False,
         }

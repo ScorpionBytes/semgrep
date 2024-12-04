@@ -757,7 +757,7 @@ def run_scan(
         allow_untrusted_validators=allow_untrusted_validators,
         respect_rule_paths=respect_rule_paths,
         path_sensitive=path_sensitive,
-        core_wrapper=core_wrapper
+        core_wrapper=core_wrapper,
     )
 
     experimental_rules, normal_rules = partition(

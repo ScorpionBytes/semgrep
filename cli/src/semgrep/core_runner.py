@@ -847,15 +847,17 @@ Could not find the semgrep-core executable. Your Semgrep install is likely corru
                 sys.exit(2)
 
             cmd = [self._core_wrapper] if self._core_wrapper else []
-            cmd.extend([
-                # bugfix: self._binary_path is an Optional[Path]. The
-                # recommended way to convert a Path to a string is to use the
-                # str function. However, mypy allows the use of str to convert
-                # Optional values to strings. Make sure to check against None
-                # even though mypy won't warn you.
-                str(self._binary_path),
-                "-json",
-            ])
+            cmd.extend(
+                [
+                    # bugfix: self._binary_path is an Optional[Path]. The
+                    # recommended way to convert a Path to a string is to use the
+                    # str function. However, mypy allows the use of str to convert
+                    # Optional values to strings. Make sure to check against None
+                    # even though mypy won't warn you.
+                    str(self._binary_path),
+                    "-json",
+                ]
+            )
 
             # adding rules option
             rule_file_contents = json.dumps(
