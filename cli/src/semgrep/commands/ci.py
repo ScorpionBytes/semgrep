@@ -206,6 +206,14 @@ def fix_head_if_github_action(metadata: GitMeta) -> None:
     type=click.Path(allow_dash=True, path_type=Path),
     hidden=True,
 )
+@click.option(
+    "--x-core-wrapper",
+    "core_wrapper",
+    default=None,
+    type=str,
+    envvar="CORE_WRAPPER",
+    hidden=True,
+)
 @handle_command_errors
 def ci(
     ctx: click.Context,
@@ -271,6 +279,7 @@ def ci(
     dump_rule_partitions_dir: Optional[Path],
     partial_config: Optional[Path],
     partial_output: Optional[Path],
+    core_wrapper: Optional[str]
 ) -> None:
     state = get_state()
 
@@ -616,7 +625,8 @@ def ci(
             "allow_dynamic_dependency_resolution": allow_dynamic_dependency_resolution,
             "dump_n_rule_partitions": dump_n_rule_partitions,
             "dump_rule_partitions_dir": dump_rule_partitions_dir,
-            "prioritize_dependency_graph_generation": scan_handler.prioritize_dependency_graph_generation
+            "prioritize_dependency_graph_generation": scan_handler.prioritize_dependency_graph_generation,
+            "core_wrapper": core_wrapper
             if scan_handler
             else False,
         }

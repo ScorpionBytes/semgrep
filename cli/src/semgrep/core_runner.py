@@ -520,6 +520,7 @@ class CoreRunner:
         allow_untrusted_validators: bool,
         respect_rule_paths: bool = True,
         path_sensitive: bool = False,
+        core_wrapper: Optional[str] = None,
     ):
         self._binary_path = engine_type.get_binary_path()
         self._jobs = jobs or engine_type.default_jobs
@@ -535,6 +536,7 @@ class CoreRunner:
         self._path_sensitive = path_sensitive
         self._respect_rule_paths = respect_rule_paths
         self._capture_stderr = capture_stderr
+        self._core_wrapper = core_wrapper
 
     def _extract_core_output(
         self,
@@ -843,7 +845,9 @@ Could not find the semgrep-core executable. Your Semgrep install is likely corru
                         """
                     )
                 sys.exit(2)
-            cmd = [
+
+            cmd = [self._core_wrapper] if self._core_wrapper else []
+            cmd.extend([
                 # bugfix: self._binary_path is an Optional[Path]. The
                 # recommended way to convert a Path to a string is to use the
                 # str function. However, mypy allows the use of str to convert
@@ -851,7 +855,7 @@ Could not find the semgrep-core executable. Your Semgrep install is likely corru
                 # even though mypy won't warn you.
                 str(self._binary_path),
                 "-json",
-            ]
+            ])
 
             # adding rules option
             rule_file_contents = json.dumps(
