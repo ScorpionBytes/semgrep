@@ -33,7 +33,6 @@ local manylinux_container = 'quay.io/pypa/manylinux_2_28_x86_64';
 // The jobs
 // ----------------------------------------------------------------------------
 
-//bump
 local build_wheels_job = {
   'runs-on': 'ubuntu-latest',
   container: manylinux_container,
@@ -41,7 +40,7 @@ local build_wheels_job = {
     actions.checkout_with_submodules(),
     {
       run: |||
-        yum update
+        yum update -y
         yum install -y zip python3-pip python3.8
         alternatives --remove-all python3
         alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 1
