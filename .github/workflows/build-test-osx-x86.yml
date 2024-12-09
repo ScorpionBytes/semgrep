@@ -42,7 +42,7 @@ jobs:
           tar xvfz artifacts.tgz
           cp artifacts/semgrep-core cli/src/semgrep/bin
           ./scripts/build-wheels.sh --plat-name macosx_10_14_x86_64
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: osx-x86-wheel
           path: cli/dist.zip

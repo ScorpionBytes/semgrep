@@ -20,7 +20,7 @@ jobs:
           tar xf artifacts.tgz
           cp artifacts/semgrep-core cli/src/semgrep/bin
           ./scripts/build-wheels.sh
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: manylinux-x86-wheel
           path: cli/dist.zip
