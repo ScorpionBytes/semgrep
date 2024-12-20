@@ -66,7 +66,11 @@ local build_core_job = {
     semgrep.opam_setup(),
     {
       name: 'Install dependencies',
-      run: 'make install-deps-MACOS-for-semgrep-core',
+      run: |||
+        make -C OSS/ install-deps-MACOS-for-semgrep-core
+        make install-deps-MACOS
+        make install-deps
+      |||,
     },
     {
       name: 'Compile semgrep (in case of linking errors, adjust src/main/flags.sh)',

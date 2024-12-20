@@ -31,7 +31,9 @@ jobs:
           ocaml-compiler: 4.14.0
           opam-pin: false
       - name: Install dependencies
-        run: make install-deps-MACOS-for-semgrep-core
+        run: |
+          make install-deps-MACOS-for-semgrep-core
+          make install-opam-deps
       - name: Compile semgrep
         run: opam exec -- make core
       - name: Make artifact for ./bin/semgrep-core
