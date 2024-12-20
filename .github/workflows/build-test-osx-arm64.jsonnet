@@ -64,7 +64,7 @@ local build_core_job = {
       name: 'Install dependencies',
       run: |||
         make install-deps-MACOS-for-semgrep-core
-        make install-opam-deps
+        make install-deps-for-semgrep-core
       |||,
     },
     {

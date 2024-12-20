@@ -33,7 +33,7 @@ jobs:
       - name: Install dependencies
         run: |
           make install-deps-MACOS-for-semgrep-core
-          make install-opam-deps
+          make install-deps-for-semgrep-core
       - name: Compile semgrep
         run: opam exec -- make core
       - name: Make artifact for ./bin/semgrep-core
