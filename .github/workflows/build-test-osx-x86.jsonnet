@@ -67,7 +67,7 @@ local build_core_job = {
     {
       name: 'Install dependencies',
       run: |||
-        make install-deps-MACOS-for-semgrep-core
+        LIBRARY_PATH="$(brew --prefix)/lib" make install-deps-MACOS-for-semgrep-core
         make install-deps-for-semgrep-core
       |||,
     },
