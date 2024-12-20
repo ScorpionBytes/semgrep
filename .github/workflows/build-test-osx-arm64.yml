@@ -32,8 +32,7 @@ jobs:
           opam-pin: false
       - name: Install dependencies
         run: |
-          LIBRARY_PATH="$(brew --prefix)/lib" make install-deps-MACOS-for-semgrep-core
-          make install-deps-for-semgrep-core
+          make install-deps-MACOS-for-semgrep-core
       - name: Compile semgrep
         run: opam exec -- make core
       - name: Make artifact for ./bin/semgrep-core
