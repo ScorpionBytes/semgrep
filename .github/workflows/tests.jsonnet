@@ -96,8 +96,8 @@ local snapshot_update_pr_steps(add_paths, repo_name) = [
 // but without the artifact creation and with more tests.
 // alt: we could factorize
 local test_semgrep_core_job =
+  semgrep.containers.ocaml_alpine.job
   {
-    'runs-on': 'ubuntu-latest',
     steps: [
       gha.speedy_checkout_step,
       actions.checkout_with_submodules(),
@@ -154,8 +154,8 @@ local test_semgrep_core_job =
 
 // alt: could factorize with previous job
 local test_osemgrep_job =
+  semgrep.containers.ocaml_alpine.job
   {
-    'runs-on': 'ubuntu-latest',
     steps: [
       gha.speedy_checkout_step,
       actions.checkout_with_submodules(),
