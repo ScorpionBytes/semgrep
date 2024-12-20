@@ -196,9 +196,6 @@ jobs:
           - "3.10"
           - "3.11"
   test-osemgrep:
-    container: returntocorp/ocaml:alpine-2024-01-18
-    env:
-      HOME: /root
     runs-on: ubuntu-latest
     steps:
       - name: Make checkout speedy
@@ -208,6 +205,10 @@ jobs:
           submodules: true
       - name: Configure git safedir properly
         run: git config --global --add safe.directory $(pwd)
+      - uses: ocaml/setup-ocaml@v3
+        with:
+          ocaml-compiler: 4.14.0
+          opam-pin: false
       - name: Build semgrep-core
         run: |
           eval $(opam env)
@@ -278,9 +279,6 @@ jobs:
           - 3
           - 4
   test-semgrep-core:
-    container: returntocorp/ocaml:alpine-2024-01-18
-    env:
-      HOME: /root
     runs-on: ubuntu-latest
     steps:
       - name: Make checkout speedy
