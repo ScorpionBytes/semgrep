@@ -417,7 +417,7 @@ install-deps-UBUNTU-for-semgrep-core:
 # external packages to force static-linking
 install-deps-MACOS-for-semgrep-core:
 	brew install $(BREW_DEPS)
-
+	LIBRARY_PATH="$$(brew --prefix)/lib" $(MAKE) install-deps-for-semgrep-core
 # Install dependencies needed for the Homebrew build.
 #
 # We don't use just 'make install-deps-for-semgrep-core' because Homebrew
