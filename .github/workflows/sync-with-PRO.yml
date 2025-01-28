@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          ref: austin/sync-fix
+          ref: f28169d28530e66a5e1984834e40decbb15bc36a
           token: ${{ steps.token.outputs.token }}
       - name: Checkout PRO
         uses: actions/checkout@v3
@@ -45,8 +45,8 @@ jobs:
              exit 1
           fi
           # will generate a 0001-xxx patch
-          git format-patch austin/sync-fix^
-          OSSREF=`git rev-parse austin/sync-fix`
+          git format-patch f28169d28530e66a5e1984834e40decbb15bc36a^
+          OSSREF=`git rev-parse f28169d28530e66a5e1984834e40decbb15bc36a`
           cd PRO
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "<>"
