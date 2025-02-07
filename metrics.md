@@ -168,7 +168,7 @@ Semgrep, Inc will:
 |             | Rules hash                              | One-way hash of the rule definitions                                          | Understand performance improvements                                                        | `b03e452f389e5a86e56426c735afef13686b3e396499fc3c42561f36f6281c43`                                                                                                                    | String         |
 |             | Config hash                             | One-way hash of the config argument                                           | Understand performance and accuracy improvements                                           | `ede96c41b57de3e857090fb3c486e69ad8efae3267bac4ac5fbc19dde7161094`                                                                                                                    | String         |
 |             | Is authenticated                        | Whether the user logged in to semgrep.dev with `semgrep login`                | Understand popularity of logged in features                                                | `false`                                                                                                                                                                               | Boolean        |
-|             | Deployment ID                           | The ID organization associated with the logged in account                     | Understand popularity of logged in features by organization                                | 1234                                                                                                                                                                                  | Number         |
+|             | Deployment ID                           | The ID organization associated with the logged in account                     | Understand popularity of logged in features by organization                                                | 1234                                                                                                                                                                               | Number        |
 |             | Integration name                        | If Semgrep is being called by another tool, optional name of that integration | Reproduce and debug issues specific integrations                                           | `gitlab`                                                                                                                                                                              | String         |
 |             | CI                                      | Notes if Semgrep is running in CI and the name of the provider                | Reproduce and debug issues with specific CI providers                                      | GitLabCI v0.13.12                                                                                                                                                                     | String         |
 |             | Client IP                               | IP address that triggered a run                                               | Understand broad ruleset usage                                                             | 0.0.0.0                                                                                                                                                                               | String         |
@@ -196,25 +196,25 @@ Semgrep, Inc will:
 |             | Warnings                                | Array of Warning Classes (compile-time-constant)                              | Understand most common warnings users encounter                                            | `["TimeoutExceeded"]`                                                                                                                                                                 | WarningClass[] |
 |             |                                         |                                                                               |                                                                                            |                                                                                                                                                                                       |                |
 | Value       |                                         |                                                                               |                                                                                            |                                                                                                                                                                                       |                |
-|             | Engine requested                        | The engine type requested by the user                                         | Understand which engines are being used; debug engine-specific problems                    | `"OSS"`                                                                                                                                                                               |
-|             | Engine configuration                    | The specific engine configuration                                             | Understand which engines are being used; debug engine-specific problems                    | `{ analysis_type: "Interfile", pro_langs: true, code_config: {} }`                                                                                                                    | str            |
+|             | Engine requested                        | The engine type requested by the user                                         | Understand which engines are being used; debug engine-specific problems                    | `"OSS"`
+|             | Engine configuration                    | The specific engine configuration                                             | Understand which engines are being used; debug engine-specific problems                    | `{ analysis_type: "Interfile", pro_langs: true, code_config: {} }`                                                                                                                                                                         | str            |
 |             | Interfile languages used                | The languages for which the interfile engine was actually invoked             | Understand which interfile languages are being used; measure performance impact and errors | `["C#"]`                                                                                                                                                                              | str            |
 |             | [Features used](#feature-usage)         | List of strings that identify Semgrep features used                           | Understand what features users find valuable, and what we could deprecate                  | `["language/python", "option/deep", "option/no-git-ignore", "key/metavariable-comparison"]`                                                                                           | Object         |
 |             | Rule hashes with findings               | Map of rule hashes to number of findings                                      | Understand which rules are providing value to the user; diagnose high false-positive rates | `{"7c43c962dfdbc52882f80021e4d0ef2396e6a950867e81e5f61e68390ee9e166": 4}`                                                                                                             | Object         |
 |             | Total Findings                          | Count of all findings                                                         | Understand if rules are super noisy for the user                                           | 7                                                                                                                                                                                     | Number         |
 |             | Findings per product                    | Count of findings broken down by product                                      | Understand the value that each product provides to the user                                | `{"code": 5, "secrets": 7, "supply-chain": 10}`                                                                                                                                       | Object         |
-|             | Total Nosems                            | Count of all `nosem` annotations that tell semgrep to ignore a finding        | Understand if rules are super noisy for the user                                           | 3                                                                                                                                                                                     | Number         |
+|             | Total Nosems | Count of all `nosem` annotations that tell semgrep to ignore a finding | Understand if rules are super noisy for the user | 3 | Number |
 |             |                                         |                                                                               |                                                                                            |                                                                                                                                                                                       |                |
 
 |Extension||||||
-| |Machine ID|A random UUID generated by the IDE itself|Understanding number of unique users using IDE integrations|`222bcccd-9dc2-4d10-ac3a-5692460e77ee`|String|
-| |Is New App Install|If the user just installed the IDE integration|Understand common issues with setting up IDE integrations|`false`|Boolean|
-| |Session ID|A random UUID generated everytime the integration starts up, usually when opening a project|Understand errors that commonly happen together, deduplicate errors|`222bcccd-9dc2-4d10-ac3a-5692460e77ee`|String|
+|         |Machine ID|A random UUID generated by the IDE itself|Understanding number of unique users using IDE integrations|`222bcccd-9dc2-4d10-ac3a-5692460e77ee`|String|
+|         |Is New App Install|If the user just installed the IDE integration|Understand common issues with setting up IDE integrations|`false`|Boolean|
+|         |Session ID|A random UUID generated everytime the integration starts up, usually when opening a project|Understand errors that commonly happen together, deduplicate errors|`222bcccd-9dc2-4d10-ac3a-5692460e77ee`|String|
 
-| |Integration version|Current version of the IDE integration|Reproduce and debug issues with specific versions|`1.8.0`| String|
-| |Integration type|IDE being used|Reproduce and debug issues with specific integrations|`vscode`|String|
-| |Autofix count|How many autofixes have been triggered through the integration|Understand the value that the integration provides to the user in helping remediate code issue|10|Number|
-| |Ignore count|How many findings have been ignored by the user through the integration|Understand the quality and noisiness of rules|5|Number|
+|         |Integration version|Current version of the IDE integration|Reproduce and debug issues with specific versions|`1.8.0`| String|
+|         |Integration type|IDE being used|Reproduce and debug issues with specific integrations|`vscode`|String|
+|         |Autofix count|How many autofixes have been triggered through the integration|Understand the value that the integration provides to the user in helping remediate code issue|10|Number|
+|         |Ignore count|How many findings have been ignored by the user through the integration|Understand the quality and noisiness of rules|5|Number|
 
 ### Anonymous user ID
 
@@ -379,7 +379,6 @@ dependencies data are:
 - Package name (e.g., lodash)
 - Package version (e.g., 1.2.3)
 - File path for lockfile (e.g., frontend/yarn.lock)
-- Analysis of external dependency calls. (e.g., from flask import Response, Response(status=204))
 
 ## Debugging data collected when traces are requested
 
@@ -387,13 +386,11 @@ To help debug performance issues, Semgrep CLI can send traces, enabled via `--tr
 Traces are never sent unless the `--trace` flag is included.
 
 There are three modes of tracing.
-
 1. Info (`--trace`): basic tracing. Sends timings about each file as it undergoes pre-processing and then matching. Includes the file path and sometimes rule names.
 2. Debug (`--trace` with `SEMGREP_TRACE_LEVEL=debug`): debug tracing. Sends additional timings, particularly around functions run during taint analysis.
 3. Trace (`--trace` with `SEMGREP_TRACE_LEVEL=trace`): even more detailed debug tracing.
 
 All traces are sent in Opentelemetry format and may include:
-
 - Semgrep function currently running (e.g. `Match_tainting_mode.check_rules`)
 - Start time (e.g. `1718775054055113`)
 - Duration (e.g. `934956`)
@@ -403,7 +400,6 @@ All traces are sent in Opentelemetry format and may include:
 - Is a taint rule (e.g. `true`)
 
 Additionally, summary data is always included in the top level trace, such as:
-
 - Repo name (e.g. `semgrep-app`)
 - Folder name (e.g. `tests`)
 - Number of matches (e.g. `2`)
@@ -417,7 +413,6 @@ Additionally, summary data is always included in the top level trace, such as:
 
 Additionally, informational, warning, and error logs will be included when
 tracing is enabled, which may include:
-
 - Stacktraces from when Semgrep crashes
 - Warnings about high memory usage
 - Informational logs about which stage of scanning Semgrep is performing
@@ -425,7 +420,6 @@ tracing is enabled, which may include:
 No information will be sent in the info mode that would not be sent by `semgrep ci`.
 
 In debug and trace mode only, traces may also include:
-
 - Hashed function names (e.g. `d40fdc8ef9bf7b7dd1b014533a58a05e9b98d7dd856784352201388fe5e22673`)
 - Hashed variable names (e.g. `0268934f5c43d1b5fc7d52d9efe17c69f1144b108c384c3513cbe493043712b3`)
 
