@@ -140,7 +140,7 @@ local build_core_job = {
         make install-opam-deps || true
         export CYGWIN_SYS_ROOT="$(x86_64-w64-mingw32-gcc --print-sysroot)"
         CFLAGS="-I$(cygpath -w $CYGWIN_SYS_ROOT/mingw/include)" LDFLAGS="-L$(cygpath -w $CYGWIN_SYS_ROOT/mingw/lib)" opam install -y ocurl.0.9.1
-        make install-opam-deps
+        make install-deps
       |||,
     },
     {
