@@ -39,7 +39,7 @@ local build_core_job = {
     // Note: we must cache after setup-ocaml, not before, because
     // setup-ocaml would reset the cached _opam
     semgrep.cache_opam.step(
-      key=semgrep.opam_switch + "-${{ hashFiles('semgrep-pro.opam', 'OSS/semgrep.opam') }}",
+      key=semgrep.opam_switch + "-${{ hashFiles('OSS/semgrep.opam') }}",
     ),
     semgrep.opam_setup(semgrep.opam_switch),
     {
