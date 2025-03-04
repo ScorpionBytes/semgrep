@@ -10,22 +10,18 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: true
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
       - uses: ajbt200128/setup-ocaml@latest
         with:
-          cache-prefix: ${{hashFiles('semgrep.opam')}}
+          cache-prefix: v1-${{hashFiles('semgrep.opam')}}
           ocaml-compiler: 5.2.1
           opam-pin: false
           save-opam-post-run: true
       - name: Install dependencies
-        run: |
-          make install-deps
-      - name: Compile semgrep
-        run: opam exec -- make core
+        run: opam exec -- make install-deps
+      - name: Build semgrep-core
+        run: opam exec -- make
       - name: Test semgrep-core
-        run: opam exec -- make core-test
+        run: opam exec -- make test
       - name: Make artifact for ./bin/semgrep-core
         run: |
           mkdir artifacts
