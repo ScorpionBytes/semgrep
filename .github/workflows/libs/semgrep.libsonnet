@@ -177,14 +177,14 @@ local opam_cache_version = "v1";
 // TODO upstream the changes in austin's custom setup-ocaml action,
 // or move the project to the semgrep org
 // coupling: default is above opam_switch
-local opam_setup = function(opam_switch=opam_switch_default, cache_deps=["semgrep.opam"]) {
+local opam_setup = function(opam_switch=opam_switch_default) {
       uses: 'semgrep/setup-ocaml@latest',
       with: {
         'ocaml-compiler': opam_switch,
 	      'opam-pin': false,
         # Save the cache post run instead of after installing the compiler
         'save-opam-post-run': true,
-        'cache-prefix': '%s-${{hashFiles(\'%s\')}}' % [opam_cache_version, std.join('\', \'', cache_deps)],
+        'cache-prefix': opam_cache_version,
       },
     };
 
@@ -253,7 +253,8 @@ local setup_nix_step = [
   // This will automatically install cachix and upload to cachix
   {
       name: "Install Cachix",
-      uses: "cachix/cachix-action@v14",
+      uses: "cachix/cachix-action@v16",
+      'continue-on-error': true,
       with: {
           name: "semgrep",
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}",
@@ -262,8 +263,8 @@ local setup_nix_step = [
 ];
 
 
-local build_test_steps(opam_switch=opam_switch_default, cache_deps=['semgrep.opam'], name='semgrep-core', time=false) = [
-    opam_setup(opam_switch, cache_deps=cache_deps),
+local build_test_steps(opam_switch=opam_switch_default, name='semgrep-core', time=false) = [
+    opam_setup(opam_switch),
     {
       name: 'Install dependencies',
       run: "opam exec -- make install-deps",
@@ -296,6 +297,25 @@ local build_test_steps(opam_switch=opam_switch_default, cache_deps=['semgrep.opa
       run: 'opam exec -- make test',
     }
   ]);
+
+local copy_executable_dlls(executable, target_dir='extra_artifacts') =
+  {
+    name: 'Copy %s DLLs to %s/' % [executable, target_dir],
+    // cygcheck lists the library (DLL) dependencies of the binary. We only
+    // copy the DLLs from the x86_64-w64-mingw32/sys-root/ directory, where the
+    // DLLs installed from the opam depexts are located. The other DLLs that we
+    // depend on are Windows System DLLs or other DLLs which should already be
+    // available to be able to run Python.
+    run: |||
+      mkdir -p %(dst)s
+      SYS_ROOT_BIN="$(x86_64-w64-mingw32-gcc -print-sysroot)/mingw/bin"
+      dlls=$(PATH=$SYS_ROOT_BIN:$PATH cygcheck "%(exe)s" | grep 'x86_64-w64-mingw32' | sed 's/^[[:space:]]*//' | sort -u)
+      for dll in $dlls; do
+        echo "Copying $dll to %(dst)s/"
+        cp -p "$dll" "%(dst)s"
+      done
+    ||| % {dst: target_dir, exe: executable},
+  };
 
 local wheel_name(arch) = '%s-wheel'% arch;
 
@@ -359,6 +379,7 @@ local test_wheel_steps(arch) = [
   opam_switch: opam_switch,
   opam_setup: opam_setup,
   build_test_steps: build_test_steps,
+  copy_executable_dlls: copy_executable_dlls,
   build_wheel_steps: build_wheel_steps,
   test_wheel_steps: test_wheel_steps,
   // coupling: cli/setup.py, the matrix in run-cli-tests.libsonnet,
