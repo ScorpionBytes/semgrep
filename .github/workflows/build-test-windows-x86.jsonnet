@@ -153,7 +153,7 @@ local build_core_job = {
       //TODO: semgrep-core displays also parse errors in the JSON output
       // weird. CRLF windows issue?
       run: |||
-        _build/install/default/bin/semgrep-core.exe -l python -rules tests/windows/rules.yml -json tests/windows/test.py
+        opam exec -- _build/install/default/bin/semgrep-core.exe -l python -rules tests/windows/rules.yml -json tests/windows/test.py
       |||,
     },
     {
